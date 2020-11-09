@@ -1,6 +1,6 @@
-# CTIURLScan
+# CTI-URLScan
 
-CTIURLScan is a command line tool to enable analysts to search URLscan.io submissions. Pull screenshot and DOM content. As well as, automatic extraction of API items to allow for easier ingestion later on.
+CTI-URLScan is a command line tool to enable analysts to search URLscan.io submissions. Pull screenshot and DOM content. As well as, automatic extraction of API items to allow for easier ingestion later on.
 
 # Features
 - Search URLscan.io
