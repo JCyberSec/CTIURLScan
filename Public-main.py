@@ -4,7 +4,7 @@ import json
 import requests
 import os
 import urllib.request
-
+import time
 
 
 
@@ -59,26 +59,33 @@ def download_png(target_uuid, target_dir, save_template):
 
 def query(uuid):
 	for target_uuid in uuid:
+
 		response = requests.get("https://urlscan.io/api/v1/result/{}".format(target_uuid))
 		status = response.status_code
 		
 		if status != requests.codes.ok:
-			print('Results not processed. Please check again later:', status)
-			break
-		
-		r = response.content.decode("utf-8")
+			if status == 429:
+				time.sleep(1)
+				response = requests.get("https://urlscan.io/api/v1/result/{}".format(target_uuid))
+				status = response.status_code
+			else:
+				print('Results not processed. Please check again later. Status {} - {}'.format(status,target_uuid))
+		if status == requests.codes.ok:		
+			r = response.content.decode("utf-8")
 
-		url = response.json().get("task").get("url").split("://")[1]
-		submission_time = response.json().get("task").get("time")
-		path = os.getcwd()
-		save_template = path + '/' + submission_time + '_' + target_uuid
-		
-		if args.dom:
-			download_dom(target_uuid)
-		if args.screenshot:
-			download_png(target_uuid, path, save_template)
-		if args.dump:
-			print(r)
+			url = response.json().get("task").get("url").split("://")[1]
+			submission_time = response.json().get("task").get("time")
+			path = os.getcwd()
+			save_template = path + '/' + submission_time + '_' + target_uuid
+			
+			if args.dom:
+				download_dom(target_uuid)
+			if args.screenshot:
+				download_png(target_uuid, path, save_template)
+			if args.dump:
+				print(r)
+
+		time.sleep(2)
 
 
 def search(term, size, date, extract):
@@ -118,6 +125,8 @@ def main():
 
 	if args.command == 'collect':
 		query(args.uuid)
+
+
 
 if __name__ == '__main__':
 	main()
