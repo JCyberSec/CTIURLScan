@@ -9,6 +9,7 @@ import time
 
 
 #Global Variables
+global APIKey
 APIKey = "XXXX-XXXX-XXXXX-XXXX-XXXXX"
 
 
@@ -120,6 +121,11 @@ def search(term, size, date, extract):
 		print(result)
 
 def main():
+	global APIKey
+	if APIKey == "XXXX-XXXX-XXXXX-XXXX-XXXXX":
+		print ("Please enter your API key: (The APIKey variable can be modified in the source to bypass this step)")
+		APIKey = input ("	[-] ")
+
 	if args.command == 'search':
 		search(args.term, args.size, args.date, args.extract)
 
