@@ -10,7 +10,26 @@ CTI-URLScan is a command line tool to enable analysts to search URLscan.io submi
 - Pull DOM of a scan
 - Automatic extraction of scanned results
 
+## Set API as environement variable
+
+This script uses Environement Variables to get your API key.
+
+Windows (cmd)
+```
+$ setx URLSCAN "APIKEY"
+```
+
+Unix  
+```
+$ export URLSCAN="APIKEY"
+```
+
 # Flags
+
+- Submit
+  - -u / --url :: The URL you want to submit for detonation
+  - -v / --visbility :: Determine if you want the submission to be private or public (Default=Private)
+
 - Search
   - -t / --term :: Search Term or string to search in URLScan.io.
   - -s / --size :: Number of results to return. Default is 96
@@ -29,6 +48,11 @@ CTI-URLScan is a command line tool to enable analysts to search URLscan.io submi
 $ python3 main.py search -t 'page.url:"google"' -e url -d 3d
 $ python3 main.py collect -u e18a2121-3c81-4fbd-9b61-38770f833052 -d
 ```
+## Submit
+```python
+$ python3 URLScanCLI.py submit -u google.com
+```
+
 
 # Benefits of the tool
 You can carefully target scans and pipe the output into further processing in the command line. 
